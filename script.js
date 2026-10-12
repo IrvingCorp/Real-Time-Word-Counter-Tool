@@ -32,17 +32,20 @@ function updateStatistics() {
 }
 
 //  3. Copy functionality
-function copyText() {
+async function copyText() {
     if (!textInput.value) return;
 
-    textInput.select();
-    document.execCommand('copy');
+    try {
+        await navigator.clipboard.writeText(textInput.value);
 
-    //  Provide visual feedback
-    copyBtn.textContent = 'Copied!';
-    setTimeout(() => {
-        copyBtn.textContent = 'Copy Text';
-    }, 1500);
+        //  Provide visual feedback
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => {
+            copyBtn.textContent = 'Copy Text';
+        }, 1500);
+    } catch (err) {
+        console.error('Error al copiar: ', err);
+    }
 }
 
 // 4. Clear functionality
